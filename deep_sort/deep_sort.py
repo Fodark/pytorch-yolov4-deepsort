@@ -25,7 +25,7 @@ class DeepSort(object):
         metric = NearestNeighborDistanceMetric("cosine", max_cosine_distance, nn_budget)
         self.tracker = Tracker(metric, max_iou_distance=max_iou_distance, max_age=max_age, n_init=n_init)
         #----added by deyiwang
-        namesfile = '/media/deyiwang/3f3ddbf8-8bf1-44ae-b725-2a349adc7d8f/sth_4_1/pytorch-yolov4-deepsort/detector/YOLOV4/model_data/coco_classes.txt'
+        namesfile = 'detector/YOLOV4/model_data/coco_classes.txt'
         self.class_names = self.load_class_names(namesfile)
         # print(type(self.class_names)) #---list
 

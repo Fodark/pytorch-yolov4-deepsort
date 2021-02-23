@@ -19,9 +19,9 @@ from .utils.utils import non_max_suppression, bbox_iou, DecodeBox,letterbox_imag
 #--------------------------------------------#
 class YOLO(object):
     _defaults = {
-        "model_path":   '/media/deyiwang/3f3ddbf8-8bf1-44ae-b725-2a349adc7d8f/sth_4_1/pytorch-yolov4-deepsort/detector/YOLOV4/model_data/yolo4_weights.pth',
-        "anchors_path": '/media/deyiwang/3f3ddbf8-8bf1-44ae-b725-2a349adc7d8f/sth_4_1/pytorch-yolov4-deepsort/detector/YOLOV4/model_data/yolo_anchors.txt',
-        "classes_path": '/media/deyiwang/3f3ddbf8-8bf1-44ae-b725-2a349adc7d8f/sth_4_1/pytorch-yolov4-deepsort/detector/YOLOV4/model_data/coco_classes.txt',
+        "model_path":   'detector/YOLOV4/model_data/yolo4_weights.pth',
+        "anchors_path": 'detector/YOLOV4/model_data/yolo_anchors.txt',
+        "classes_path": 'detector/YOLOV4/model_data/coco_classes.txt',
         "model_image_size" : (416, 416, 3),
         "confidence": 0.5,
         "iou" : 0.3,
