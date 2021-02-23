@@ -35,8 +35,8 @@ class VideoTracker(object):
             self.vdo = cv2.VideoCapture(args.cam)
         else:
             self.vdo = cv2.VideoCapture()
-        self.detector = build_detector()
-        self.deepsort = build_tracker(use_cuda=True)
+        self.detector = build_detector(use_cuda=use_cuda)
+        self.deepsort = build_tracker(use_cuda=use_cuda)
         self.class_names = self.detector.class_names
 
     def __enter__(self):
@@ -155,18 +155,19 @@ class VideoTracker(object):
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--display", action="store_true", default=True)
+    parser.add_argument("--no-display", dest="display", action="store_false", default=True)
     parser.add_argument("--frame_interval", type=int, default=1)
     parser.add_argument("--display_width", type=int, default=800)
     parser.add_argument("--display_height", type=int, default=600)
     parser.add_argument("--save_path", type=str, default="./output/")
     parser.add_argument("--cpu", dest="use_cuda", action="store_false", default=True)
     parser.add_argument("--camera", action="store", dest="cam", type=int, default="-1")
+    parser.add_argument('--video', dest='video', type=str, default='./001.avi')
     return parser.parse_args()
 
 
 if __name__ == "__main__":
     args = parse_args()
 
-    with VideoTracker( args, video_path='./001.avi') as vdo_trk:
+    with VideoTracker( args, video_path=args.video) as vdo_trk:
         vdo_trk.run()

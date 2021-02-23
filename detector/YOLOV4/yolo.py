@@ -38,8 +38,9 @@ class YOLO(object):
     #---------------------------------------------------#
     #   初始化YOLO
     #---------------------------------------------------#
-    def __init__(self, **kwargs):
+    def __init__(self, use_cuda):
         self.__dict__.update(self._defaults)
+        self.cuda = use_cuda
         self.class_names = self._get_class()
         self.anchors = self._get_anchors()
         self.generate()
