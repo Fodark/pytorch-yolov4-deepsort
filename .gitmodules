@@ -1,0 +1,3 @@
+[submodule "detector/PyTorch_YOLOv4"]
+	path = detector/PyTorch_YOLOv4
+	url = https://github.com/Fodark/PyTorch_YOLOv4.git

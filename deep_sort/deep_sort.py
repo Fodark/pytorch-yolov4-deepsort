@@ -30,6 +30,8 @@ class DeepSort(object):
         # print(type(self.class_names)) #---list
 
     def update(self, bbox_xywh, confidences, ori_img):
+        #print('DEEP ---------------------------')
+        #print(bbox_xywh)
         # print('deep_sort, update, bbox_xywh:\n', bbox_xywh)
         self.height, self.width = ori_img.shape[:2]
         # generate detections
@@ -37,6 +39,7 @@ class DeepSort(object):
         # print('deep-sort.py, update, features:', type(features), len(features))
         # print(len(features[0]))
         bbox_tlwh = self._xywh_to_tlwh(bbox_xywh)
+        #print(bbox_tlwh)
         # print('deep_sort, update, bbox_tlwh:\n', bbox_tlwh)
         # print('deep-sort.py, update, bbox_tlwh:', type(bbox_tlwh), len(bbox_tlwh))
         detections = [Detection(bbox_tlwh[i], conf, features[i]) for i,conf in enumerate(confidences) if conf>self.min_confidence]
