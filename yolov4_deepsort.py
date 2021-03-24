@@ -35,8 +35,7 @@ class VideoTracker(object):
             self.vdo = cv2.VideoCapture(args.cam)
         else:
             self.vdo = cv2.VideoCapture()
-        self.detector = build_detector(use_cuda=use_cuda)
-        self.detector1 = build_detector(finetuned=True, cfg="detector/PyTorch_YOLOv4/models/yolov4l-mish.yaml", weights="detector/PyTorch_YOLOv4/weights/yolov4l-mish.pt")
+        self.detector = build_detector(finetuned=True, cfg="detector/PyTorch_YOLOv4/models/yolov4l-mish.yaml", weights="detector/PyTorch_YOLOv4/weights/yolov4l-mish.pt")
         self.deepsort = build_tracker(use_cuda=use_cuda)
         self.class_names = self.detector.class_names
 
@@ -91,12 +90,7 @@ class VideoTracker(object):
                 #----- do detection
                 frame = Image.fromarray(np.uint8(im))
                 bbox_xywh, cls_conf, cls_ids = self.detector.new_detect(frame)
-                print('---')
-                print(bbox_xywh)
-                print('---')
-                bbox_xywh, cls_conf, cls_ids = self.detector1.new_detect(frame)
-                print(bbox_xywh)
-                print('---')
+                
                 if cls_conf is not None:
                     #-----copy
                     list_fin = []

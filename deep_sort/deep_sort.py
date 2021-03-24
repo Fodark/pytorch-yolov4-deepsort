@@ -29,16 +29,17 @@ class DeepSort(object):
         self.class_names = self.load_class_names(namesfile)
         # print(type(self.class_names)) #---list
 
-    def update(self, bbox_xywh, confidences, ori_img):
+    def update(self, bbox_tlwh, confidences, ori_img):
         #print('DEEP ---------------------------')
         #print(bbox_xywh)
         # print('deep_sort, update, bbox_xywh:\n', bbox_xywh)
         self.height, self.width = ori_img.shape[:2]
         # generate detections
+        bbox_xywh = [self._tlwh_to_xywh(bb) for bb in bbox_tlwh]
         features = self._get_features(bbox_xywh, ori_img)
         # print('deep-sort.py, update, features:', type(features), len(features))
         # print(len(features[0]))
-        bbox_tlwh = self._xywh_to_tlwh(bbox_xywh)
+        #bbox_tlwh = self._xywh_to_tlwh(bbox_xywh)
         #print(bbox_tlwh)
         # print('deep_sort, update, bbox_tlwh:\n', bbox_tlwh)
         # print('deep-sort.py, update, bbox_tlwh:', type(bbox_tlwh), len(bbox_tlwh))
@@ -99,6 +100,9 @@ class DeepSort(object):
         bbox_tlwh[:,3] = bbox_xywh[:,3]  
         return bbox_tlwh
 
+    def _tlwh_to_xywh(self, bbox_tlwh):
+        t, l, w, h = bbox_tlwh
+        return t + w/2, l + h/2, w, h
 
     def _xywh_to_xyxy(self, bbox_xywh):
         x,y,w,h = bbox_xywh
