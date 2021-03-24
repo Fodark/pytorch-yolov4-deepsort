@@ -117,7 +117,7 @@ class VideoTracker(object):
                     new_cls_ids = []
                     #print(cls_conf)
                     for i in range(len(mask_filter)):
-                        if mask_filter[i]==1 and cls_conf[i] > self.conf:
+                        if mask_filter[i]==1 and cls_conf[i] > self.conf and new_bbox[i][3] / self.im_height > .01:
                             new_cls_conf.append(cls_conf[i])
                             new_new_bbox.append(new_bbox[i])
                             new_cls_ids.append(cls_ids[i])

@@ -34,8 +34,14 @@ class Extractor(object):
         """
         def _resize(im, size):
             return cv2.resize(im.astype(np.float32)/255., size)
-
-        im_batch = torch.cat([self.norm(_resize(im, self.size)).unsqueeze(0) for im in im_crops], dim=0).float()
+        
+        tmp = []
+        for im in im_crops:
+            try:
+                tmp.extend([self.norm(_resize(im, self.size)).unsqueeze(0)])
+            except Exception as e:
+                pass
+        im_batch = torch.cat(tmp, dim=0).float()
         return im_batch
 
 

@@ -43,7 +43,7 @@ class DeepSort(object):
         #print(bbox_tlwh)
         # print('deep_sort, update, bbox_tlwh:\n', bbox_tlwh)
         # print('deep-sort.py, update, bbox_tlwh:', type(bbox_tlwh), len(bbox_tlwh))
-        detections = [Detection(bbox_tlwh[i], conf, features[i]) for i,conf in enumerate(confidences) if conf>self.min_confidence]
+        detections = [Detection(bbox_tlwh[i], confidences[i], feat) for i,feat in enumerate(features) if len(feat)>0 and confidences[i]>self.min_confidence]
         # print('deep-sort.py, update, detections:\n', type(detections), len(detections),detections)
 
         # print(dir(detections))
