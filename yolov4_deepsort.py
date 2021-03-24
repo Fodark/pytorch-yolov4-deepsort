@@ -37,6 +37,7 @@ class VideoTracker(object):
             self.vdo = cv2.VideoCapture()
         self.detector = build_detector(finetuned=True, cfg="detector/PyTorch_YOLOv4/models/yolov4l-mish.yaml", weights="detector/PyTorch_YOLOv4/weights/yolov4l-mish.pt")
         self.deepsort = build_tracker(use_cuda=use_cuda)
+        self.conf = args.conf
         # self.class_names = self.detector.class_names
 
     def __enter__(self):
@@ -104,7 +105,7 @@ class VideoTracker(object):
                     new_bbox = np.array(list_fin).astype(np.float32)
 
                     #-----#-----mask processing filter the useless part
-                    mask = [0,1,2,3,5,7]# keep specific classes the indexes are corresponded to coco_classes
+                    mask = [0]# keep specific classes the indexes are corresponded to coco_classes
                     mask_filter = []
                     for i in cls_ids:
                         if i in mask:
@@ -114,8 +115,9 @@ class VideoTracker(object):
                     new_cls_conf = []
                     new_new_bbox = []
                     new_cls_ids = []
+                    #print(cls_conf)
                     for i in range(len(mask_filter)):
-                        if mask_filter[i]==1 and cls_conf[i] > .3:
+                        if mask_filter[i]==1 and cls_conf[i] > self.conf:
                             new_cls_conf.append(cls_conf[i])
                             new_new_bbox.append(new_bbox[i])
                             new_cls_ids.append(cls_ids[i])
@@ -164,6 +166,7 @@ def parse_args():
     parser.add_argument("--cpu", dest="use_cuda", action="store_false", default=True)
     parser.add_argument("--camera", action="store", dest="cam", type=int, default="-1")
     parser.add_argument('--video', dest='video', type=str, default='./001.avi')
+    parser.add_argument('--conf', dest="conf", type=float, default=.5)
     return parser.parse_args()
 
 
