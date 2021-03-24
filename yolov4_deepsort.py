@@ -115,7 +115,7 @@ class VideoTracker(object):
                     new_new_bbox = []
                     new_cls_ids = []
                     for i in range(len(mask_filter)):
-                        if mask_filter[i]==1:
+                        if mask_filter[i]==1 and cls_conf[i] > .3:
                             new_cls_conf.append(cls_conf[i])
                             new_new_bbox.append(new_bbox[i])
                             new_cls_ids.append(cls_ids[i])
