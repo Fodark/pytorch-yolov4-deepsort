@@ -1,6 +1,6 @@
 [submodule "detector/PyTorch_YOLOv4"]
 	path = detector/PyTorch_YOLOv4
 	url = https://github.com/Fodark/PyTorch_YOLOv4.git
-[submodule "face-detector/insightface"]
-	path = face-detector/insightface
+[submodule "face_detector/insightface"]
+	path = face_detector/insightface
 	url = https://github.com/Fodark/insightface.git
