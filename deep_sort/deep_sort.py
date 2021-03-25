@@ -30,31 +30,18 @@ class DeepSort(object):
         # print(type(self.class_names)) #---list
 
     def update(self, bbox_tlwh, confidences, ori_img):
-        #print('DEEP ---------------------------')
-        #print(bbox_xywh)
-        # print('deep_sort, update, bbox_xywh:\n', bbox_xywh)
         self.height, self.width = ori_img.shape[:2]
         # generate detections
         bbox_xywh = [self._tlwh_to_xywh(bb) for bb in bbox_tlwh]
         features = self._get_features(bbox_xywh, ori_img)
-        # print('deep-sort.py, update, features:', type(features), len(features))
-        # print(len(features[0]))
-        #bbox_tlwh = self._xywh_to_tlwh(bbox_xywh)
-        #print(bbox_tlwh)
-        # print('deep_sort, update, bbox_tlwh:\n', bbox_tlwh)
-        # print('deep-sort.py, update, bbox_tlwh:', type(bbox_tlwh), len(bbox_tlwh))
+        
+        # match detections and features
         detections = [Detection(bbox_tlwh[i], confidences[i], feat) for i,feat in enumerate(features) if len(feat)>0 and confidences[i]>self.min_confidence]
-        # print('deep-sort.py, update, detections:\n', type(detections), len(detections),detections)
-
-        # print(dir(detections))
-        #-----added by deyiwang
-        # run on non-maximum supression
+        
         boxes = np.array([d.tlwh for d in detections])
-        # print('deep_sort, update, boxes:\n', boxes)
         scores = np.array([d.confidence for d in detections])
-        # print('deep_sort, update, scores:\n', scores)
+        # run NMS
         indices = non_max_suppression(boxes, self.nms_max_overlap, scores)
-        # print('deep_sort, update, indices:\n', indices)
         detections = [detections[i] for i in indices]
 
         # update tracker
